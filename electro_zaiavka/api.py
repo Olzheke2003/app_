@@ -5,11 +5,7 @@ from .models import Request, Comment, User
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-
-    def get_queryset(self):
-        request_id = self.request.get('request_pk')
-        queryset = Comment.objects.filter(request=request_id)
-        return queryset
+    queryset = Comment.objects.all()
 
 
 class RequestApiView(viewsets.ModelViewSet):
