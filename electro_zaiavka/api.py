@@ -13,6 +13,9 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         queryset = Comment.objects.filter(user=user)
+        return queryset
+
+
 
 
 class RequestApiView(viewsets.ModelViewSet):
