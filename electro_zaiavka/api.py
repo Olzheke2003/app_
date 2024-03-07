@@ -1,8 +1,8 @@
 from rest_framework import viewsets
-from electro_zaiavka.serializers import RequestSerializer, CommentSerializer
-from .models import Request, Comment, User
 from rest_framework.permissions import IsAuthenticated
-from django.db.models import Max
+
+from electro_zaiavka.models import Comment, Request
+from electro_zaiavka.serializers import CommentSerializer, RequestSerializer
 
 
 class CommentViewSet(viewsets.ModelViewSet):

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Request, RequestStatus, Category, User, Comment, Rating
+from .models import Category, Comment, Rating, Request, RequestStatus, User
 
 
 class CommentSerializer(serializers.Serializer):
@@ -31,5 +31,3 @@ class RequestSerializer(serializers.ModelSerializer):
                   'description', 'start_date', 'end_date',
                   'request_category', 'status',
                   'ratings', 'user')
-
-
