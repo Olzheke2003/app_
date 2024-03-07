@@ -10,6 +10,10 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     permission_classes = (IsAuthenticated,)
 
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Comment.objects.filter(user=user)
+
 
 class RequestApiView(viewsets.ModelViewSet):
     serializer_class = RequestSerializer

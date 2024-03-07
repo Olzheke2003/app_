@@ -4,13 +4,17 @@ from .models import Category, Comment, Rating, Request, RequestStatus, User
 
 
 class CommentSerializer(serializers.Serializer):
+    user = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
+    request = serializers.SlugRelatedField(slug_field='name_required', queryset=Request.objects.all())
     text = serializers.CharField(max_length=255)
-    created = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ('text', 'created', 'request')
+        fields = ('text', 'created', 'request', 'user')
         read_only_fields = ('created',)
+
+    def create(self, validated_data):
+        return Comment.objects.create(**validated_data)
 
 
 class UserSerializer(serializers.ModelSerializer):
