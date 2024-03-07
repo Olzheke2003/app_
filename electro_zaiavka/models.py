@@ -33,10 +33,10 @@ class Request(models.Model):
     name_required = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
     start_date = models.DateField(default=date.today)
-    end_date = models.DateField(default=lambda: date.today() + timedelta(days=6))
+    end_date = models.DateField(default=date.today() + timedelta(days=6))
     request_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     status = models.ForeignKey(RequestStatus, on_delete=models.CASCADE)
-    ratings = models.ManyToManyField(Rating, blank=True)
+    ratings = models.ForeignKey(Rating, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name_required

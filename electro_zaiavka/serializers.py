@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Request, RequestStatus, Category, User, Comment, AbstractUser
+from .models import Request, RequestStatus, Category, User, Comment, Rating
 
 
 class CommentSerializer(serializers.Serializer):
@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 class RequestSerializer(serializers.ModelSerializer):
     request_category = serializers.SlugRelatedField(slug_field='name', queryset=Category.objects.all())
     status = serializers.SlugRelatedField(slug_field='status_name', queryset=RequestStatus.objects.all())
-    ratings = serializers.SerializerMethodField()
+    ratings = serializers.SlugRelatedField(slug_field='value', queryset=Rating.objects.all())
     user = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
 
     class Meta:
@@ -32,6 +32,4 @@ class RequestSerializer(serializers.ModelSerializer):
                   'request_category', 'status',
                   'ratings', 'user')
 
-    def get_ratings(self, obj):
-        return [rating.value for rating in obj.ratings.all()]
 
