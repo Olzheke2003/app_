@@ -1,9 +1,16 @@
 from pathlib import Path
+import os
+import environ
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-@dthkdgmorkxaj6naclqs82wgp10pyv9(t0c_rzy+_n-iib903'
+env = environ.Env()
+environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
+
+
+SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = True
 
@@ -57,17 +64,18 @@ WSGI_APPLICATION = 'app_.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'electro_zaiavka',
-        'USER': 'Olzhas',
-        'PASSWORD': 'OlezkaYouBk_2003',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
+
+
 
 
 # Password validation

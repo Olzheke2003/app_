@@ -16,8 +16,6 @@ class CommentViewSet(viewsets.ModelViewSet):
         return queryset
 
 
-
-
 class RequestApiView(viewsets.ModelViewSet):
     serializer_class = RequestSerializer
     permission_classes = (IsAuthenticated,)

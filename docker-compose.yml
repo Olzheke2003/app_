@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+    ports:
+      - "5432:5432"
+
+  prediction:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      DEBUG: "False"
+      DB_NAME: "app"
+      DB_USER: "app"
+      DB_PASSWORD: "app"
+      DB_HOST: "host.docker.internal"
+      DB_PORT: 5432
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # Остальные настройки вашего сервиса prediction
+    image: python:3.9
+    working_dir: /app
+    command: >
+      sh -c "pip install -r req.txt &&
+             python manage.py migrate &&
+             python manage.py shell -c 'from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username=\"admin\").exists() or User.objects.create_superuser(\"admin\", \"admin@example.com\", \"admin\")' &&
+             python manage.py loaddata request.json &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
