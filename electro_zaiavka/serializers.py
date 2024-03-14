@@ -10,7 +10,7 @@ class CommentSerializer(serializers.Serializer):
 
     class Meta:
         model = Comment
-        fields = ('text', 'created', 'request', 'user')
+        fields = ('text', 'request', 'user')
         read_only_fields = ('created',)
 
     def create(self, validated_data):
@@ -20,7 +20,7 @@ class CommentSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email')
 
 
 class RequestSerializer(serializers.ModelSerializer):
