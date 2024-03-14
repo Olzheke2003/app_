@@ -18,7 +18,7 @@ class RequestApiView(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated and not user.work:
-            queryset = Request.objects.filter(request_category=user.category).last()
+            queryset = Request.objects.filter(request_category=user.category)
         else:
             queryset = Request.objects.all()
         return queryset
